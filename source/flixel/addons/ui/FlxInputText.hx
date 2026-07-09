@@ -759,7 +759,7 @@ class FlxInputText extends FlxText
 
 			// Generate unique key for the caret so we don't cause weird bugs if someone makes some random flxsprite of this size and color
 			var caretKey:String = "caret" + cw + "x" + ch + "c:" + caretC + "b:" + borderStyle + "," + borderSize + "," + borderC;
-			switch (borderStyle)
+ 			switch (borderStyle)
 			{
 				case NONE:
 					// No border, just make the caret
@@ -775,6 +775,18 @@ class FlxInputText extends FlxText
 					caret.pixels.fillRect(r, borderC); // draw shadow
 					r.x = r.y = 0;
 					caret.pixels.fillRect(r, caretC); // draw caret
+					caret.offset.x = caret.offset.y = 0;
+
+				case SHADOW_XY(offsetX, offsetY):
+					var shadowX:Int = Std.int(Math.abs(offsetX));
+					var shadowY:Int = Std.int(Math.abs(offsetY));
+					cw += shadowX + Std.int(borderSize);
+					ch += shadowY + Std.int(borderSize);
+					caret.makeGraphic(cw, ch, FlxColor.TRANSPARENT, false, caretKey);
+					var r:Rectangle = new Rectangle(Std.int(offsetX + borderSize), Std.int(offsetY + borderSize), caretWidth, Std.int(size + 2));
+					caret.pixels.fillRect(r, borderC);
+					r.x = r.y = 0;
+					caret.pixels.fillRect(r, caretC);
 					caret.offset.x = caret.offset.y = 0;
 
 				case OUTLINE_FAST, OUTLINE:

@@ -30,7 +30,6 @@ import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import haxe.Json;
 import Character;
-import flixel.system.debug.interaction.tools.Pointer.GraphicCursorCross;
 import lime.system.Clipboard;
 import flixel.animation.FlxAnimation;
 
@@ -98,8 +97,7 @@ class CharacterEditorState extends MusicBeatState
 		charLayer = new FlxTypedGroup<Character>();
 		add(charLayer);
 
-		var pointer:FlxGraphic = FlxGraphic.fromClass(GraphicCursorCross);
-		cameraFollowPointer = new FlxSprite().loadGraphic(pointer);
+		cameraFollowPointer = new FlxSprite().loadGraphic("assets/preload/images/crosshair.png");
 		cameraFollowPointer.setGraphicSize(40, 40);
 		cameraFollowPointer.updateHitbox();
 		cameraFollowPointer.color = FlxColor.WHITE;
