@@ -55,6 +55,7 @@ import hscript.Expr;
 
 #if desktop
 import Discord;
+import lime.app.Application;
 #end
 
 using StringTools;
@@ -2769,6 +2770,28 @@ class FunkinLua {
 			return list;
 		});
 
+		// WINDOW FUNCTIONS AND VARIABLES
+		var window = lime.app.Application.current.window;
+		set('windowWidth', window.width);
+		set('windowHeight', window.height);
+		set('windowTitle', window.title);
+		set('windowFullscreen', window.fullscreen);
+		set('windowX', window.x);
+		set('windowY', window.y);
+		Lua_helper.add_callback(lua, "setWindowSize", function(width:Int, height:Int) {
+			window.resize(width, height);
+			set('windowWidth', window.width);
+			set('windowHeight', window.height);
+		});
+		Lua_helper.add_callback(lua, "moveWindow", function(x:Int, y:Int) {
+			window.move(x, y);
+			set('windowX', window.x);
+			set('windowY', window.y);
+		});
+		Lua_helper.add_callback(lua, "setWindowTitle", function(title:String) {
+			window.title = title;
+			set('windowTitle', window.title);
+		});
 		call('onCreate', []);
 		#end
 	}

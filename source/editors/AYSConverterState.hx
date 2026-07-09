@@ -162,6 +162,7 @@ class AYSConverterState extends MusicBeatState
 						if (sectionNotes == []) {
 							// skip
 						}
+						trace(sectionNotes);
 					}
 				}
 				var loadedDialog:DialogueFile = cast Json.parse(rawJson);

@@ -49,7 +49,7 @@ class NoteSplash extends FlxSprite
 		colorSwap.saturation = satColor;
 		colorSwap.brightness = brtColor;
 		if(PlayState.isPixelStage) {
-			offset.set(10, 10);
+			offset.set(20, 50);
 			antialiasing = false;
 		} else {
 			offset.set(10, 10);
