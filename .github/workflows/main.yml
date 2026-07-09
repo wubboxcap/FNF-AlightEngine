@@ -52,11 +52,11 @@ jobs:
           haxelib set flixel-addons 3.0.2
           haxelib --always install tjson
           haxelib --always install hxjsonast
-          haxelib --always git hxCodec https://github.com/polybiusproxy/hxCodec
+          haxelib --always install hxCodec
           haxelib --always git linc_luajit https://github.com/nebulazorua/linc_luajit
           haxelib --always install hscript
           haxelib --always git hscript-ex https://github.com/ianharrigan/hscript-ex
-          haxelib --always git discord_rpc https://github.com/Aidan63/linc_discord-rpc
+          haxelib --always install discord_rpc
           haxelib --always install hxcpp-debug-server
           haxelib list
       - name: Create Version Tag
@@ -100,11 +100,11 @@ jobs:
           haxelib set flixel-addons 3.0.2
           haxelib --always install tjson
           haxelib --always install hxjsonast
-          haxelib --always git hxCodec https://github.com/polybiusproxy/hxCodec
+          haxelib --always install hxCodec
           haxelib --always git linc_luajit https://github.com/nebulazorua/linc_luajit
           haxelib --always install hscript
           haxelib --always git hscript-ex https://github.com/ianharrigan/hscript-ex
-          haxelib --always git discord_rpc https://github.com/Aidan63/linc_discord-rpc
+          haxelib --always install discord_rpc
           haxelib --always install hxcpp-debug-server
           haxelib list
         shell: cmd
@@ -149,11 +149,11 @@ jobs:
           haxelib set openfl 9.2.1
           haxelib --always install tjson
           haxelib --always install hxjsonast
-          haxelib --always git hxCodec https://github.com/polybiusproxy/hxCodec
+          haxelib --always install hxCodec
           haxelib --always git linc_luajit https://github.com/nebulazorua/linc_luajit
           haxelib --always install hscript
           haxelib --always git hscript-ex https://github.com/ianharrigan/hscript-ex
-          haxelib --always git discord_rpc https://github.com/Aidan63/linc_discord-rpc
+          haxelib --always install discord_rpc
           haxelib --always install hxcpp-debug-server
           haxelib list
 
