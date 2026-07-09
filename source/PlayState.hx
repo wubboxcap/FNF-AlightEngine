@@ -1618,7 +1618,6 @@ class PlayState extends MusicBeatState
 		}
 
 		var video:FlxVideo = new FlxVideo();
-		video.playVideo(filepath);
 		video.onEndReached.add(function()
 		{
 			video.dispose(); // Clean up memory
