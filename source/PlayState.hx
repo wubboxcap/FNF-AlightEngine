@@ -72,7 +72,7 @@ import sys.io.File;
 #end
 
 #if VIDEOS_ALLOWED
-import vlc.VideoHandler;
+import hxvlc.flixel.FlxVideo;
 #end
 
 using StringTools;
@@ -1617,12 +1617,21 @@ class PlayState extends MusicBeatState
 			return;
 		}
 
-		var video:VideoHandler = new VideoHandler();
+		var video:FlxVideo = new FlxVideo();
 		video.playVideo(filepath);
-		video.finishCallback = function()
+		video.onEndReached.add(function()
 		{
+			video.dispose(); // Clean up memory
 			startAndEnd();
-			return;
+		});
+		if (video.load(filepath))
+		{
+			video.play();
+		}
+		else
+		{
+			FlxG.log.error('Failed to load video file: ' + filepath);
+			startAndEnd();
 		}
 		#else
 		FlxG.log.warn('Platform not supported!');
