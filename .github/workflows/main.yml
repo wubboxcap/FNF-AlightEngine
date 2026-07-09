@@ -27,7 +27,7 @@ jobs:
 
       - uses: krdlab/setup-haxe@master
         with:
-          haxe-version: latest
+          haxe-version: 4.3.7
       # Runs a set of commands using the runners shell
       - name: Install Haxelib
         run: |
@@ -36,8 +36,8 @@ jobs:
           haxelib setup ~/haxelib
           haxelib install hxcpp 4.3.2 > /dev/null
           haxelib --always install flixel
-          haxelib --always install lime
-          haxelib --always install openfl
+          haxelib --always install lime 8.3.2
+          haxelib --always install openfl 9.5.2
           haxelib --always run lime setup flixel
           haxelib --always run lime setup
           haxelib --always install flixel-ui
@@ -68,15 +68,15 @@ jobs:
 
       - uses: krdlab/setup-haxe@master
         with:
-          haxe-version: latest
+          haxe-version: 4.3.7
       # Runs a set of commands using the runners shell
       - name: Install Haxelib
         run: |
           haxelib setup C:/haxelib
-          haxelib install hxcpp > nul
+          haxelib install hxcpp 4.3.2 > nul
           haxelib --always install flixel
-          haxelib --always install lime
-          haxelib --always install openfl
+          haxelib --always install lime 8.3.2
+          haxelib --always install openfl 9.5.2
           haxelib --always run lime setup flixel
           haxelib --always run lime setup
           haxelib --always install flixel-ui
@@ -108,15 +108,15 @@ jobs:
 
       - uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.2.5
+          haxe-version: 4.3.7
       # Runs a set of commands using the runners shell
       - name: Install Haxelib
         run: |
           haxelib setup ~/haxelib
-          haxelib install hxcpp > /dev/null
+          haxelib install hxcpp 4.3.2 > /dev/null
           haxelib --always install flixel
-          haxelib --always install lime
-          haxelib --always install openfl
+          haxelib --always install lime 8.3.2
+          haxelib --always install openfl 9.5.2
           haxelib --always run lime setup flixel
           haxelib --always run lime setup
           haxelib --always install flixel-ui 
