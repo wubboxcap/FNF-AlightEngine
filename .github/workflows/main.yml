@@ -34,7 +34,7 @@ jobs:
           sudo apt-get install libvlc-dev
           sudo apt-get install libvlccore-dev
           haxelib setup ~/haxelib
-          haxelib install hxcpp 4.2.1 > /dev/null
+          haxelib install hxcpp 4.3.2 > /dev/null
           haxelib install lime 8.0.2
           haxelib install openfl 9.2.1
           haxelib install flixel 5.2.2
@@ -44,10 +44,11 @@ jobs:
           haxelib run flixel-tools setup
           haxelib install flixel-ui 2.5.0
           haxelib install flixel-addons 3.0.2
-          haxelib set lime 8.0.2
-          haxelib set openfl 9.2.1
+          haxelib set hxcpp 4.3.2
           haxelib set flixel 5.2.2
           haxelib set flixel-ui 2.5.0
+          haxelib set lime 8.0.2
+          haxelib set openfl 9.2.1
           haxelib set flixel-addons 3.0.2
           haxelib install tjson
           haxelib install hxjsonast
@@ -81,7 +82,7 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup C:/haxelib
-          haxelib install hxcpp 4.2.1 > nul
+          haxelib install hxcpp 4.3.2 > nul
           haxelib install lime 8.0.2
           haxelib install openfl 9.2.1
           haxelib install flixel 5.2.2
@@ -91,10 +92,11 @@ jobs:
           haxelib run flixel-tools setup
           haxelib install flixel-ui 2.5.0
           haxelib install flixel-addons 3.0.2
-          haxelib set lime 8.0.2
-          haxelib set openfl 9.2.1
+          haxelib set hxcpp 4.3.2
           haxelib set flixel 5.2.2
           haxelib set flixel-ui 2.5.0
+          haxelib set lime 8.0.2
+          haxelib set openfl 9.2.1
           haxelib set flixel-addons 3.0.2
           haxelib install tjson
           haxelib install hxjsonast
@@ -129,7 +131,7 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib setup ~/haxelib
-          haxelib install hxcpp 4.2.1 > /dev/null
+          haxelib install hxcpp 4.3.2 > /dev/null
           haxelib install lime 8.0.2
           haxelib install openfl 9.2.1
           haxelib install flixel 5.2.2
@@ -139,11 +141,12 @@ jobs:
           haxelib run flixel-tools setup
           haxelib install flixel-ui 2.5.0
           haxelib install flixel-addons 3.0.2
-          haxelib set lime 8.0.2
-          haxelib set openfl 9.2.1
+          haxelib set hxcpp 4.3.2
           haxelib set flixel 5.2.2
           haxelib set flixel-ui 2.5.0
           haxelib set flixel-addons 3.0.2
+          haxelib set lime 8.0.2
+          haxelib set openfl 9.2.1
           haxelib install tjson
           haxelib install hxjsonast
           haxelib git hxCodec https://github.com/polybiusproxy/hxCodec
