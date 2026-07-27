@@ -31,6 +31,8 @@ class FPS extends TextField
 		The current frame rate, expressed using frames-per-second
 	**/
 	public var currentFPS(default, null):Int;
+	// Add this to track the highest recorded memory usage
+    private var memoryPeak:Float = 0;
 
 	@:noCompletion private var cacheCount:Int;
 	@:noCompletion private var currentTime:Float;
@@ -81,30 +83,108 @@ class FPS extends TextField
 		if (currentFPS > ClientPrefs.framerate) currentFPS = ClientPrefs.framerate;
 
 		if (currentCount != cacheCount /*&& visible*/)
-		{
-			text = "FPS: " + currentFPS;
-			var memoryMegas:Float = 0;
-			
-			#if openfl
-			memoryMegas = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
-			text += "\nMemory: " + memoryMegas + " MB";
-			#end
+        {
+            var memoryCurrent:Float = System.totalMemory;
+            var memoryMegas:Float = Math.abs(FlxMath.roundDecimal(System.totalMemory / 1000000, 1));
 
-			textColor = 0xFFFFFFFF;
-			if (memoryMegas > 3000 || currentFPS <= ClientPrefs.framerate / 2)
-			{
-				textColor = 0xFFFF0000;
-			}
+            // Update peak memory if current memory exceeds the previous peak
+            if (memoryCurrent > memoryPeak) {
+                memoryPeak = memoryCurrent;
+            }
 
-			#if (gl_stats && !disable_cffi && (!html5 || !canvas))
-			text += "\ntotalDC: " + Context3DStats.totalDrawCalls();
-			text += "\nstageDC: " + Context3DStats.contextDrawCalls(DrawCallContext.STAGE);
-			text += "\nstage3DDC: " + Context3DStats.contextDrawCalls(DrawCallContext.STAGE3D);
-			#end
+            // Fetch setting values (use ClientPrefs.data on 0.7+)
+            var fpsEnabled:Bool = ClientPrefs.showFPS;
+            var ramEnabled:Bool = ClientPrefs.showRamUsage;
+            var peakEnabled:Bool = ClientPrefs.showPeakMemory;
 
-			text += "\n";
+            var textLines:Array<String> = [];
+
+            if (fpsEnabled)
+            {
+                textLines.push("FPS: " + currentFPS);
+            }
+
+            #if openfl
+            if (ramEnabled)
+            {
+                if (peakEnabled) {
+                    textLines.push("Memory: " + formatMemory(memoryCurrent) + " / " + formatMemory(memoryPeak));
+                } else {
+                    textLines.push("Memory: " + formatMemory(memoryCurrent));
+                }
+            }
+            #end
+
+            text = textLines.join("\n");
+
+            textColor = 0xFFFFFFFF;
+            if (memoryMegas > 3000 || currentFPS <= ClientPrefs.framerate / 2)
+            {
+                textColor = 0xFFFF0000;
+            }
+
+            #if (gl_stats && !disable_cffi && (!html5 || !canvas))
+            text += "\ntotalDC: " + Context3DStats.totalDrawCalls();
+            text += "\nstageDC: " + Context3DStats.contextDrawCalls(DrawCallContext.STAGE);
+            text += "\nstage3DDC: " + Context3DStats.contextDrawCalls(DrawCallContext.STAGE3D);
+            #end
+
+            text += "\n";
 		}
 
 		cacheCount = currentCount;
 	}
+	/**
+	* Forces an immediate refresh of the text string based on current ClientPrefs.
+	*/
+	public function updateText():Void
+	{
+		var memoryCurrent:Float = System.totalMemory;
+
+		// Fetch setting values (use ClientPrefs.data on 0.7+)
+		var fpsEnabled:Bool = ClientPrefs.showFPS;
+		var ramEnabled:Bool = ClientPrefs.showRamUsage;
+		var peakEnabled:Bool = ClientPrefs.showPeakMemory;
+
+		var textLines:Array<String> = [];
+
+		if (fpsEnabled)
+		{
+			textLines.push("FPS: " + currentFPS);
+		}
+
+		#if openfl
+		if (ramEnabled)
+		{
+			if (peakEnabled) {
+				textLines.push("Memory: " + formatMemory(memoryCurrent) + " / " + formatMemory(memoryPeak));
+			} else {
+				textLines.push("Memory: " + formatMemory(memoryCurrent));
+			}
+		}
+		#end
+
+		text = textLines.join("\n");
+
+		#if (gl_stats && !disable_cffi && (!html5 || !canvas))
+		text += "\ntotalDC: " + Context3DStats.totalDrawCalls();
+		text += "\nstageDC: " + Context3DStats.contextDrawCalls(DrawCallContext.STAGE);
+		text += "\nstage3DDC: " + Context3DStats.contextDrawCalls(DrawCallContext.STAGE3D);
+		#end
+
+		text += "\n";
+	}
+}
+private function formatMemory(bytes:Float):String 
+{
+    var mb:Float = bytes / (1024 * 1024);
+    
+    if (mb >= 1024) {
+        var gb:Float = mb / 1024;
+        // Formats to 2 decimal places (e.g., 1.25 GB)
+        return FlxMath.roundDecimal(gb, 2) + " GB";
+    }
+    
+    // Formats to 2 decimal places (e.g., 450.50 MB)
+    return FlxMath.roundDecimal(mb, 2) + " MB";
 }

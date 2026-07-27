@@ -97,6 +97,24 @@ class VisualsUISubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 		option.onChange = onChangeFPSCounter;
+		var optionRAM:Option = new Option(
+			'Show Memory Counter',
+			'If unchecked, hides the RAM usage display entirely.',
+			'showRamUsage',
+			'bool'
+		);
+		addOption(optionRAM);
+		optionRAM.onChange = onChangeFPSCounter;
+
+		// Peak Memory Toggle
+		var optionPeak:Option = new Option(
+			'Show Peak Memory',
+			'If unchecked, hides the peak RAM tracking while keeping current memory visible.',
+			'showPeakMemory',
+			'bool'
+		);
+		addOption(optionPeak);
+		optionPeak.onChange = onChangeFPSCounter;
 		#end
 		
 		var option:Option = new Option('Pause Screen Song:',
@@ -148,7 +166,8 @@ class VisualsUISubState extends BaseOptionsMenu
 	function onChangeFPSCounter()
 	{
 		if(Main.fpsVar != null)
-			Main.fpsVar.visible = ClientPrefs.showFPS;
+			Main.fpsVar.visible = (ClientPrefs.showFPS || ClientPrefs.showRamUsage);
+		Main.fpsVar.updateText();
 	}
 	#end
 }

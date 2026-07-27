@@ -270,6 +270,7 @@ class PlayState extends MusicBeatState
 	public var scoreTxt:FlxText;
 	var timeTxt:FlxText;
 	var scoreTxtTween:FlxTween;
+	public var lyricsText:FlxText;
 
 	public static var campaignScore:Int = 0;
 	public static var campaignMisses:Int = 0;
@@ -1370,7 +1371,35 @@ class PlayState extends MusicBeatState
 			FlxG.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyRelease);
 		}
 		callOnLuas('onCreatePost', []);
+		// Check if we are playing either Monster song
+		var currentSong:String = Paths.formatToSongPath(PlayState.SONG.song);
+		if (currentSong == 'monster' || currentSong == 'winter-horrorland' && (Paths.currentModDirectory == null || Paths.currentModDirectory.length == 0))
+		{
+			// 1. Determine Vertical Position (Y)
+			// If Downscroll is ON, put lyrics near top. If OFF (Upscroll), put lyrics near bottom.
+			var lyricY:Float = ClientPrefs.downScroll ? 120 : (FlxG.height - 120);
 
+			// 2. Determine Horizontal Width & Placement (X)
+			var lyricWidth:Float = FlxG.width/1.25;
+
+			if (ClientPrefs.middleScroll)
+			{
+				// When Middlescroll is enabled, notes sit right in the center of the screen.
+				// Move text up/down slightly to avoid overlapping the strumline directly.
+				if (ClientPrefs.downScroll)
+					lyricY = 160; // Push down a bit further from top HUD
+				else
+					lyricY = FlxG.height - 160; // Push up a bit further from bottom HUD
+			}
+			// Setup the FlxText display near the bottom of the screen
+			lyricsText = new FlxText(0, lyricY, lyricWidth, "", 28);
+			lyricsText.setFormat(Paths.font("GhoulFriAOE.ttf"), 28, FlxColor.fromInt(0xFFFAFD53), CENTER, OUTLINE, FlxColor.BLACK);
+			lyricsText.borderSize = 2;
+			lyricsText.screenCenter(X);
+			lyricsText.scrollFactor.set(); // Keeps it glued to the camera screen
+			lyricsText.cameras = [camHUD];  // Attaches it to the HUD layer
+			add(lyricsText);
+		}
 		super.create();
 
 		cacheCountdown();
@@ -3916,7 +3945,10 @@ class PlayState extends MusicBeatState
 					health -= 0.05 * healthLoss;
 				}
 			}
-
+			if (lyricsText != null)
+			{
+				lyricsText.visible = false;
+			}
 			if(doDeathCheck()) {
 				return;
 			}
@@ -5007,6 +5039,54 @@ class PlayState extends MusicBeatState
 			|| (SONG.needsVoices && Math.abs(vocals.time - (Conductor.songPosition - Conductor.offset)) > (20 * playbackRate)))
 		{
 			resyncVocals();
+		}
+		var currentSong:String = Paths.formatToSongPath(PlayState.SONG.song);
+
+		// --- MONSTER LYRICS ---
+		if (currentSong == 'monster' && (Paths.currentModDirectory == null || Paths.currentModDirectory.length == 0))
+		{
+			switch (curStep)
+			{
+				case 16: lyricsText.text = "O...";
+				case 22: lyricsText.text = "Oo...";
+				case 24: lyricsText.text = "Ooo...";
+				case 28: lyricsText.text = "Oooo...";
+				case 32: lyricsText.text = "Ooooh...";
+				case 42: lyricsText.text = "";
+				case 84: lyricsText.text = "Guess";
+				case 86: lyricsText.text += " it's";
+				case 88: lyricsText.text += " time,";
+				case 92: lyricsText.text += " you";
+				case 94: lyricsText.text += " better";
+				case 96: lyricsText.text += " plug";
+				case 98: lyricsText.text += " in";
+				case 100: lyricsText.text += " all";
+				case 102: lyricsText.text += " your";
+				case 104: lyricsText.text += " night";
+				case 108: lyricsText.text += "-lights...";
+				case 112: lyricsText.text = "";
+				case 148: lyricsText.text = "What's";
+				case 150: lyricsText.text += " out";
+				case 152: lyricsText.text += " there,";
+				case 156: lyricsText.text += " past";
+				case 158: lyricsText.text += " your";
+				case 160: lyricsText.text += " dark";
+				case 164: lyricsText.text += "ened";
+				case 168: lyricsText.text += " door?";
+				case 176: lyricsText.text = "";
+				case 208: lyricsText.text = "Just";
+				case 214: lyricsText.text += " the";
+				case 216: lyricsText.text += " eyes";
+				case 218: lyricsText.text += " float";
+				case 220: lyricsText.text += "ing";
+				case 222: lyricsText.text += " up";
+				case 224: lyricsText.text += " out";
+				case 227: lyricsText.text += " of";
+				case 229: lyricsText.text += " the";
+				case 232: lyricsText.text += " shore.";
+				case 240: lyricsText.text = "";
+				case 290: lyricsText.text = "And";
+			}
 		}
 
 		if(curStep == lastStepHit) {

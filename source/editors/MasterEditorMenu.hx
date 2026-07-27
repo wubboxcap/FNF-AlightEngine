@@ -23,6 +23,7 @@ class MasterEditorMenu extends MusicBeatState
 	var options:Array<String> = [
 		'Week Editor',
 		'Menu Character Editor',
+		'Lua Script Editor',
 		'Dialogue Editor',
 		'Dialogue Portrait Editor',
 		'Character Editor',
@@ -129,6 +130,8 @@ class MasterEditorMenu extends MusicBeatState
 					LoadingState.loadAndSwitchState(new ChartingState(), false);
 				case 'Chart to AYS Converter':
 					LoadingState.loadAndSwitchState(new AYSConverterState(), false);
+				case 'Lua Script Editor':
+					LoadingState.loadAndSwitchState(new LuaBlockEditorState(), false);
 			}
 			FlxG.sound.music.volume = 0;
 			#if PRELOAD_ALL

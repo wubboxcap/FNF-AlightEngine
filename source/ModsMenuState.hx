@@ -59,6 +59,8 @@ class ModsMenuState extends MusicBeatState
 
 	var installButton:FlxButton;
 	var removeButton:FlxButton;
+	var gameBananaButton:FlxButton;
+	var addFromZipButton:FlxButton;
 
 	var modsList:Array<Dynamic> = [];
 
@@ -89,6 +91,7 @@ class ModsMenuState extends MusicBeatState
 		add(noModsTxt);
 		noModsTxt.screenCenter();
 		visibleWhenNoMods.push(noModsTxt);
+		
 
 		var path:String = 'modsList.txt';
 		if(FileSystem.exists(path))

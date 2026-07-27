@@ -57,7 +57,7 @@ private typedef SwagSong =
 private typedef Chart = {
     var song:SwagSong;
 }
-class AYSConverterState extends MusicBeatState
+class LuaBlockEditorState extends MusicBeatState
 {
 	var box:FlxSprite;
 	var daText:TypedAlphabet;
@@ -121,7 +121,7 @@ class AYSConverterState extends MusicBeatState
 
 	var _file:FileReference = null;
 	function loadDialogue() {
-		var jsonFilter:FileFilter = new FileFilter('JSON', 'json');
+		var jsonFilter:FileFilter = new FileFilter("Lua Scripts (*.lua)", "*.lua");
 		_file = new FileReference();
 		_file.addEventListener(Event.SELECT, onLoadComplete);
 		_file.addEventListener(Event.CANCEL, onLoadCancel);

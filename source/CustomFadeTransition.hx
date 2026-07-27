@@ -54,7 +54,9 @@ class CustomFadeTransition extends MusicBeatSubstate {
 				onComplete: function(twn:FlxTween) {
 					if(finishCallback != null) {
 						finishCallback();
+						finishCallback = null;
 					}
+					leTween = null;
 				},
 			ease: FlxEase.linear});
 		}
@@ -82,9 +84,10 @@ class CustomFadeTransition extends MusicBeatSubstate {
 
 	override function destroy() {
 		if(leTween != null) {
-			finishCallback();
 			leTween.cancel();
+			leTween = null;
 		}
+		finishCallback = null;
 		super.destroy();
 	}
 }
